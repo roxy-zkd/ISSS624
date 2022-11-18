@@ -1,0 +1,14 @@
+{
+  "hash": "a11c3ed816f2d3ee92bf3c97f63e352c",
+  "result": {
+    "markdown": "---\ntitle: \"ISSS624\"\n---\n\n\nWelcome to ISSS624 Geospatial Analytics Applications!\n\nIn this webpage, I am going to share with you my learning journey of geospatial analytics.\n\nTo learn more about Quarto websites visit <https://quarto.org/docs/websites>.\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}
