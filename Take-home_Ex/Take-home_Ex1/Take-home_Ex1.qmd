@@ -482,7 +482,7 @@ pvalue_NF.map <- tm_shape(nga.localMI_NF) +
 tmap_arrange(localMI_F.map, pvalue_F.map, localMI_NF.map, pvalue_NF.map, asp=1.5, ncol=2)
 ```
 
-The 4 maps above detect the cluster and/or outlier of functional and not functional water points in Nigeria. Local Moran\'s I values map and its corresponding p-values map is plotted next to each other for directly comparison and analysis.
+The 4 maps above detect the cluster and/or outlier of functional and not functional water points in Nigeria. Local Moran's I values map and its corresponding p-values map is plotted next to each other for directly comparison and analysis.
 
 ## 13. Creating a LISA Cluster Map
 
@@ -496,7 +496,7 @@ Code chunk below performs the following tasks:
 
 -   DV_F & DV_NF field center the spatially lagged variable around its mean.
 
--   LM_I\_F & LM_I\_NF field center the local Moran\'s around the mean.
+-   LM_I\_F & LM_I\_NF field center the local Moran's around the mean.
 
 -   *signif* variable is used to set a statistical significance level for the local Moran.
 
@@ -720,7 +720,7 @@ nga.gi <- cbind(nga.gi, as.matrix(gi.adaptive_F), as.matrix(gi.adaptive_NF)) %>%
   rename(gstat_adaptive_NF = as.matrix.gi.adaptive_NF.)
 ```
 
-#### 14.2.3 Saving the AnalyGi Statistics Analytical Data Table 
+#### 14.2.3 Saving the AnalyGi Statistics Analytical Data Table
 
 Code chunk below performs the following task:
 
