@@ -35,7 +35,7 @@ View the content of the newly created *shan_sf* simple features data frame.
 shan_sf
 ```
 
-Since it is conformed to tidy framework, use *glimpse()* to reveal the data type of it\'s fields.
+Since it is conformed to tidy framework, use *glimpse()* to reveal the data type of it's fields.
 
 ```{r}
 glimpse(shan_sf)
@@ -319,7 +319,7 @@ ac <- function(x) {
 map_dbl(m, ac)
 ```
 
-With reference to the output above, we can see that Ward\'s method provides the strongest clustering structure among the four methods assessed. Hence, in the subsequent analysis, only Ward\'s method will be used.
+With reference to the output above, we can see that Ward's method provides the strongest clustering structure among the four methods assessed. Hence, in the subsequent analysis, only Ward's method will be used.
 
 ### Determining Optimal Clusters
 
