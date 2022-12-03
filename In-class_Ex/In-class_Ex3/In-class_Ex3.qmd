@@ -1,0 +1,102 @@
+---
+title: "In-class Exercise 3"
+editor: visual
+execute: 
+  warning: false
+  message: false
+  fig-retine: 3
+---
+
+## Getting Started
+
+The code chunk below will install and load the shown packages.
+
+```{r}
+pacman::p_load(rgdal, spdep, tmap, sf, ClustGeo, 
+               ggpubr, cluster, factoextra, NbClust,
+               heatmaply, corrplot, psych, tidyverse)
+```
+
+## Importing geospatial data
+
+```{r}
+shan_sf <- read_rds("data/rds/shan_sf.rds")
+```
+
+## Data Preparation
+
+This code chunk will extract the clustering variables from the *shan_sf* simple feature object into data frame.
+
+```{r}
+cluster_vars <- shan_sf %>%
+  st_set_geometry(NULL) %>%
+  select("TS.x", "RADIO_PR", "TV_PR", "LLPHONE_PR", "MPHONE_PR", "COMPUTER_PR")
+head(cluster_vars,10)
+```
+
+This code chunk will delete the *TS.x* field.
+
+```{r}
+shan_ict <- select(cluster_vars, c(2:6))
+head(shan_ict, 10)
+```
+
+This code chunk will use *dist()* to compute the proximity matrix using *euclidean* method.
+
+```{r}
+proxmat <- dist(shan_ict, method = 'euclidean')
+proxmat
+```
+
+## Spatially Constrained Clustering
+
+### Ward-like hierarchical clustering: ClustGeo
+
+This code chunk will use *hclustgeo()* and *hclust()* to perform a non-spatially constrained Ward-like hierarchical clustering by using a dissimilarity matrix.
+
+```{r}
+nongeo_cluster <- hclustgeo(proxmat)
+plot(nongeo_cluster, cex = 0.5)
+rect.hclust(nongeo_cluster, 
+            k = 6, 
+            border = 2:5)
+```
+
+#### Mapping the clusters formed
+
+This code chunk will plot the clusters on a categorical area shaped map.
+
+```{r}
+groups <- as.factor(cutree(nongeo_cluster, k=6))
+shan_sf_ngeo_cluster <- cbind(shan_sf, as.matrix(groups)) %>%
+  rename(`CLUSTER` = `as.matrix.groups.`)
+qtm(shan_sf_ngeo_cluster, "CLUSTER")
+```
+
+### Spatially Constrained Hierarchical Clustering
+
+This code chunk will use *st_distance()* of **sf** package to derive a spatial distance matrix.
+
+```{r}
+dist <- st_distance(shan_sf, shan_sf)
+distmat <- as.dist(dist)
+```
+
+Then we will use *choicealpha()* to determine a suitable value for the mixing parameter alpha.
+
+```{r}
+cr <- choicealpha(proxmat, distmat, range.alpha = seq(0, 1, 0.1), K=6, graph = TRUE)
+```
+
+With reference to the graphs above, alpha = 0.3 will be used in the following clustering analysis.
+
+```{r}
+clustG <- hclustgeo(proxmat, distmat, alpha = 0.3)
+#use cutree() to derive the cluster objecct
+groups <- as.factor(cutree(clustG, k=6))
+#join back the group list with shan_sf polygon feature data frame
+shan_sf_Gcluster <- cbind(shan_sf, as.matrix(groups)) %>%
+  rename(`CLUSTER` = `as.matrix.groups.`)
+#plot the map of the newly delineated spatially constrained clusters
+qtm(shan_sf_Gcluster, "CLUSTER")
+```
