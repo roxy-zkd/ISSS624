@@ -2,8 +2,6 @@
 title: "About"
 ---
 
-About this site
+#### Kedan Zheng
 
-```{r}
-1 + 1
-```
+#### Singapore Management University
